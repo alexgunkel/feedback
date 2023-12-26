@@ -1,0 +1,53 @@
+listen: "0.0.0.0:9098"
+domain: "http://127.0.0.1:9098"
+chapters:
+  - title: "Alles in allem: Wie zufrieden bist Du insgesamt mit der Veranstaltung?"
+    questions:
+      - title: "Mit der Veranstaltung bin ich sehr zufrieden"
+        short: "overall"
+      - title: "Was hat Dir an unserer Veranstaltung am besten gefallen?"
+        short: "to-keep"
+        type: "text"
+      - title: "Was hat Dir an unserer Veranstaltung am wenigsten gefallen? Wo müssen wir umdenken oder besser werden?"
+        short: "to-change"
+        type: "text"
+  - title: "Struktur und Aufbau"
+    questions:
+      - title: "Die Veranstaltung war gut organisiert."
+        short: "orga"
+      - title: "Der inhaltliche Aufbau der Veranstaltung war stringent."
+        short: "systematic"
+  - title: "Arbeitsatmosphäre und Austausch"
+    questions:
+      - title: "Die allgemeine Atmosphäre war angenehm."
+        short: "atmosphere"
+      - title: "Es herrschte ein konstruktives Arbeitsklima."
+        short: "contructive"
+      - title: "Die Veranstaltung bot mir Gelegenheit, mich mit anderen Akteuren auszutauschen."
+        short: "conversation"
+      - title: "Die Veranstaltung bot mir Gelegenheit, mich mit anderen Akteuren nachhaltig zu vernetzen."
+        short: "networking"
+  - title: "Information und Fazit"
+    questions:
+      - title: "Ich nehme neue Impulse und Denkanstöße mit."
+        short: "newideas"
+      - title: "Hast Du noch Anregungen für uns oder vielleicht Ideen für zukünftige Veranstaltungen? Welchem Thema sollten wir uns einmal widmen?"
+        short: "remarks"
+        type: "text"
+options:
+  - description: "Stimmt"
+    id: 5
+  - description: "Stimmt teilweise"
+    id: 4
+  - description: "neutral"
+    id: 3
+  - description: "Stimmt eher nicht"
+    id: 2
+  - description: "Stimmt nicht"
+    id: 1
+  - description: "Keine Antwort"
+    id: 0
+db_config:
+  user: "feedback"
+  password: "passwd"
+  database: "feedback"

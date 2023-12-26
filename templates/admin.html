@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{{ $domain := .Domain }}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="/public/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN">
+
+    <title>Feedback Admin</title>
+</head>
+<body style="background-color: #ffed00">
+<div class="container bg-white p-5">
+    <div class="row">
+        <div class="col-md-8 col-12">
+            <h1 class="display-3 fw-bold" style="color: #e5007d">Feedback Administrationsbereich</h1>
+        </div>
+        <div class="col-md-4 col-12">
+            <img src="/public/logo.png" class="img-fluid">
+        </div>
+    </div>
+    <h1>Umfragen</h1>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Titel</th>
+            <th scope="col">Url</th>
+            <th scope="col">QR-Code</th>
+            <th scope="col">Datum</th>
+            <th scope="col">Rückmeldungen</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ range .Surveys }}
+        <tr>
+            <td>
+                {{ .Title }}
+            </td>
+            <td><a href="{{ $domain }}{{ .GetAccessPath }}" target="_blank">{{ $domain }}{{ .GetAccessPath }}</a></td>
+            <td>
+                <a href="{{ $domain }}/qr{{ .GetAccessPath }}?size=small">Small</a>
+                <a href="{{ $domain }}/qr{{ .GetAccessPath }}?size=medium">Medium</a>
+                <a href="{{ $domain }}/qr{{ .GetAccessPath }}?size=big">Big</a>
+            </td>
+            <td>{{ .GetDateTime }}</td>
+            <td>{{ .Submissions | len }} (<a href="{{ $domain }}/result{{ .GetEvaluationPath }}" target="_blank">Auswertung</a>)</td>
+        </tr>
+        {{ end }}
+        </tbody>
+    </table>
+
+    <h1>Neue Umfrage</h1>
+    <form action="/admin" method="post">
+        <div class="form-group">
+            <label for="new-survey">Titel</label>
+            <input type="text" class="form-control" id="new-survey" name="new-survey" placeholder="Trage hier den Titel der Veranstaltung ein">
+        </div>
+        <div class="form-group">
+            <label for="datetime">Datum und Uhrzeit</label>
+            <input type="datetime-local" class="form-control" name="datetime" id="datetime">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script src="/public/bootstrap.min.js"></script>
+</body>
+</html>

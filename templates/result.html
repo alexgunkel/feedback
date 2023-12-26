@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+{{ $results := .Res }}
+{{ $config := .Cfg }}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/public/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN">
+
+    <title>{{ $results.Title }}</title>
+</head>
+<body style="background-color: #ffed00">
+<div class="container bg-white p-5">
+    {{ range $config.Chapters }}
+    <h2>{{ .Title }}</h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Frage</th>
+            {{ range $config.Options }}
+            <th scope="col">{{ .Description }}</th>
+            {{ end }}
+        </tr>
+        </thead>
+        <tbody>
+        {{ range .Questions }}
+        {{ $question := . }}
+        {{ if not $question.IsText }}
+        <tr>
+            <td>{{ $question.Title }}</td>
+            {{ $v := index $results.Ratings $question.Short }}
+            {{ range $config.Options }}
+            <td>{{ index $v .ID }}</td>
+            {{ end }}
+        </tr>
+        {{ end }}
+        {{ end }}
+        </tbody>
+    </table>
+    {{ end }}
+
+    <h2>Textliche Anmerkungen</h2>
+    {{ range $config.Chapters }}
+    {{ range .Questions }}
+    {{ if .IsText }}
+    <h5>{{ .Title }}</h5>
+
+    {{ $answers := index $results.Texts .Short }}
+        {{ range $answers }}
+        <div class="m-4">{{ . }}</div>
+        {{ end }}
+    {{ end }}
+    {{ end }}
+    {{ end }}
+</div>
+
+</body>
+</html>

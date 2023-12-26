@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+{{ $config := .Cfg }}
+{{ $survey := .Survey }}
+{{ $options := $config.Options }}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/public/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN">
+
+    <title>{{ $survey.Title }}</title>
+</head>
+<body style="background-color: #ffed00">
+<div class="container bg-white p-5">
+    <div class="row">
+        <div class="col-md-4 col-12">
+            <img src="/public/logo.png" class="img-fluid">
+        </div>
+        <div class="col-md-8 col-12">
+            <h1 class="fw-bold">{{ $survey.Title }}</h1>
+            <p>Datum: {{ $survey.GetDateTime }}</p>
+            <p class="text-justify">Deine Meinung ist uns wichtig, denn nur so können wir besser werden. Die Beantwortung des Feedbackbogens ist
+                natürlich freiwillig und wir garantieren Vertraulichkeit.
+                Sämtliche Angaben werden anonym, vertraulich und unter Einhaltung der Datenschutzbestimmungen behandelt.</p>
+        </div>
+    </div>
+    <form action="{{ $survey.GetAccessPath }}" method="post">
+        {{ range $config.Chapters }}
+            <h2 class="pt-4 fw-bold">{{ .Title }}</h2>
+            {{ range .Questions }}
+                <p class="pt-2 pb-0 fw-bold">{{ .Title }}</p>
+                {{ $short := .Short }}
+                {{ if .IsText }}
+                    <div class="form-group">
+                        <textarea class="form-control" id="{{ $short }}" name="{{ $short }}" rows="3"></textarea>
+                    </div>
+                {{ else }}
+                    <div class="row mb-3">
+                        {{ range $options }}
+                        <div class="col-md-2 col-sm-12">
+                            <input type="radio" class="btn-check" name="{{ $short }}" id="{{ $short }}-{{ .ID }}"
+                                   value="{{ .ID }}" autocomplete="off" required>
+                            <label class="btn btn-outline-dark w-100" for="{{ $short }}-{{ .ID }}">{{ .Description
+                                }}</label>
+                        </div>
+                        {{ end }}
+                    </div>
+                {{ end }}
+            {{ end }}
+        {{ end }}
+        <button class="btn mt-3 fw-bold" style="background-color: #e5007d; color: #ffed00" type="submit">Absenden</button>
+    </form>
+    <div class="mt-5 row">
+        <div class="col text-center"><a href="https://fdp-leipzig.de/datenschutz/" target="_blank">Datenschutzerklärung</a></div>
+        <div class="col text-center"><a href="https://fdp-leipzig.de/impressum/" target="_blank">Impressum</a></div>
+    </div>
+</div>
+</body>
+</html>
